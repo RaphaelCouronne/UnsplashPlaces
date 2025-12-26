@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f8c41fe0f7ac4a6126876ccd24ee1f02 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_f8c41fe0f7ac4a6126876ccd24ee1f02" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f8c41fe0f7ac4a6126876ccd24ee1f02 = L.map(
+                "map_f8c41fe0f7ac4a6126876ccd24ee1f02",
+                {
+                    center: [41.795611928571425, -69.04390344285714],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 2,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_27052f7a034a1381a5f90539c6089f9f = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_27052f7a034a1381a5f90539c6089f9f.addTo(map_f8c41fe0f7ac4a6126876ccd24ee1f02);
+        
+    
+            var marker_44cea0e5e34930820e806c8220dd3e48 = L.marker(
+                [46.4924904, 7.6203822],
+                {
+}
+            ).addTo(map_f8c41fe0f7ac4a6126876ccd24ee1f02);
+        
+    
+        var popup_c7c0ad9ccb31ea8e66cfba43de36ce59 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_302e1a52673541723624595d2ab024a6 = $(`<div id="html_302e1a52673541723624595d2ab024a6" style="width: 100.0%; height: 100.0%;">Landscape photo of mountain alps photo – Free Nature Image on Unsplash<br>Bunderspitz, Adelboden, Switzerland</div>`)[0];
+                popup_c7c0ad9ccb31ea8e66cfba43de36ce59.setContent(html_302e1a52673541723624595d2ab024a6);
+            
+        
+
+        marker_44cea0e5e34930820e806c8220dd3e48.bindPopup(popup_c7c0ad9ccb31ea8e66cfba43de36ce59)
+        ;
+
+        
+    
+    
+            marker_44cea0e5e34930820e806c8220dd3e48.bindTooltip(
+                `<div>
+                     Bunderspitz, Adelboden, Switzerland
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_fa7eafa92f1e6744bb1b803836283713 = L.marker(
+                [20.8029568, -156.3106833],
+                {
+}
+            ).addTo(map_f8c41fe0f7ac4a6126876ccd24ee1f02);
+        
+    
+        var popup_b9940624074c6867e9acd88fc4986a94 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_457b4b0d8f309b440d679cce3b77da1a = $(`<div id="html_457b4b0d8f309b440d679cce3b77da1a" style="width: 100.0%; height: 100.0%;">Photo by Luca Bravo on Unsplash<br>Maui, Hawaii</div>`)[0];
+                popup_b9940624074c6867e9acd88fc4986a94.setContent(html_457b4b0d8f309b440d679cce3b77da1a);
+            
+        
+
+        marker_fa7eafa92f1e6744bb1b803836283713.bindPopup(popup_b9940624074c6867e9acd88fc4986a94)
+        ;
+
+        
+    
+    
+            marker_fa7eafa92f1e6744bb1b803836283713.bindTooltip(
+                `<div>
+                     Maui, Hawaii
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_1ca9f39bb1cab4e34bb5f4903ffccadd = L.marker(
+                [64.9841821, -18.1059013],
+                {
+}
+            ).addTo(map_f8c41fe0f7ac4a6126876ccd24ee1f02);
+        
+    
+        var popup_8def1ec7d92644e4ab6a40293ba4e1da = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_24fc8e129899b49e6db4162aaa22f3f7 = $(`<div id="html_24fc8e129899b49e6db4162aaa22f3f7" style="width: 100.0%; height: 100.0%;">Photography of five assorted-color horses on grass field in front of mountain photo – Free Animal Image on Unsplash<br>Iceland</div>`)[0];
+                popup_8def1ec7d92644e4ab6a40293ba4e1da.setContent(html_24fc8e129899b49e6db4162aaa22f3f7);
+            
+        
+
+        marker_1ca9f39bb1cab4e34bb5f4903ffccadd.bindPopup(popup_8def1ec7d92644e4ab6a40293ba4e1da)
+        ;
+
+        
+    
+    
+            marker_1ca9f39bb1cab4e34bb5f4903ffccadd.bindTooltip(
+                `<div>
+                     Iceland
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_96065fa885a61b9b9a4cab79c41a24cf = L.marker(
+                [31.5402016, -110.753927],
+                {
+}
+            ).addTo(map_f8c41fe0f7ac4a6126876ccd24ee1f02);
+        
+    
+        var popup_d179d1299a39e6423cd91544d166a624 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9152fcf4e3490754409f9b4feb746dad = $(`<div id="html_9152fcf4e3490754409f9b4feb746dad" style="width: 100.0%; height: 100.0%;">Photo by Christopher Burns on Unsplash<br>Patagonia</div>`)[0];
+                popup_d179d1299a39e6423cd91544d166a624.setContent(html_9152fcf4e3490754409f9b4feb746dad);
+            
+        
+
+        marker_96065fa885a61b9b9a4cab79c41a24cf.bindPopup(popup_d179d1299a39e6423cd91544d166a624)
+        ;
+
+        
+    
+    
+            marker_96065fa885a61b9b9a4cab79c41a24cf.bindTooltip(
+                `<div>
+                     Patagonia
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_af687ff512e0e4c74e8518fc674e1695 = L.marker(
+                [46.1012342, 7.7161466],
+                {
+}
+            ).addTo(map_f8c41fe0f7ac4a6126876ccd24ee1f02);
+        
+    
+        var popup_9a1e0255cb81da9f5a8acd7dea2dbb05 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2086a459b8b586b7a4e0efa58e82b4e1 = $(`<div id="html_2086a459b8b586b7a4e0efa58e82b4e1" style="width: 100.0%; height: 100.0%;">Photo by Samuel Ferrara on Unsplash<br>Weisshorn, Randa, Switzerland</div>`)[0];
+                popup_9a1e0255cb81da9f5a8acd7dea2dbb05.setContent(html_2086a459b8b586b7a4e0efa58e82b4e1);
+            
+        
+
+        marker_af687ff512e0e4c74e8518fc674e1695.bindPopup(popup_9a1e0255cb81da9f5a8acd7dea2dbb05)
+        ;
+
+        
+    
+    
+            marker_af687ff512e0e4c74e8518fc674e1695.bindTooltip(
+                `<div>
+                     Weisshorn, Randa, Switzerland
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_a6e1a33013b17867af08b1a499955a97 = L.marker(
+                [39.0885405, -120.0503528],
+                {
+}
+            ).addTo(map_f8c41fe0f7ac4a6126876ccd24ee1f02);
+        
+    
+        var popup_4b58cd0c14263f0cf323af334f9e8e26 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_074d2cd603a60a551d40ed55e125ff45 = $(`<div id="html_074d2cd603a60a551d40ed55e125ff45" style="width: 100.0%; height: 100.0%;">Top view photography of trees near body of water photo – Free Lake tahoe Image on Unsplash<br>Lake Tahoe, United States</div>`)[0];
+                popup_4b58cd0c14263f0cf323af334f9e8e26.setContent(html_074d2cd603a60a551d40ed55e125ff45);
+            
+        
+
+        marker_a6e1a33013b17867af08b1a499955a97.bindPopup(popup_4b58cd0c14263f0cf323af334f9e8e26)
+        ;
+
+        
+    
+    
+            marker_a6e1a33013b17867af08b1a499955a97.bindTooltip(
+                `<div>
+                     Lake Tahoe, United States
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_3341b7ef25d7a5b2abca9b494535c70b = L.marker(
+                [43.5596779, -93.4229885],
+                {
+}
+            ).addTo(map_f8c41fe0f7ac4a6126876ccd24ee1f02);
+        
+    
+        var popup_91284eaa71f5480b0dcc5d917414d332 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_13f0987d267116770dae538e631b8408 = $(`<div id="html_13f0987d267116770dae538e631b8408" style="width: 100.0%; height: 100.0%;">Snow capped mountain under white clouds in mirror reflection photography photo – Free Nature Image on Unsplash<br>Twin Lakes, United States</div>`)[0];
+                popup_91284eaa71f5480b0dcc5d917414d332.setContent(html_13f0987d267116770dae538e631b8408);
+            
+        
+
+        marker_3341b7ef25d7a5b2abca9b494535c70b.bindPopup(popup_91284eaa71f5480b0dcc5d917414d332)
+        ;
+
+        
+    
+    
+            marker_3341b7ef25d7a5b2abca9b494535c70b.bindTooltip(
+                `<div>
+                     Twin Lakes, United States
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>
