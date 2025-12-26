@@ -14,9 +14,14 @@ def create_map(locations_data: list[dict], output_path: Path | None = None) -> P
     m = folium.Map(location=[center_lat, center_lon], zoom_start=2)
     
     for item in locations_data:
+        popup_html = f"<b>{item['Title']}</b><br>{item['Location']}"
+        if item.get('Image'):
+             popup_html += f"<br><img src='{item['Image']}' width='200' style='margin-top:5px;'>"
+        popup_html += f"<br><a href='{item['Url']}' target='_blank'>More info</a>"
+
         folium.Marker(
             [item['Latitude'], item['Longitude']],
-            popup=f"<b>{item['Title']}</b><br>{item['Location']}<br><a href='{item['Url']}' target='_blank'>More info</a>",
+            popup=popup_html,
             tooltip=item['Location']
         ).add_to(m)
     

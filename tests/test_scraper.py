@@ -1,18 +1,25 @@
 from pathlib import Path
-from unsplash_places.scraper import parse_file
+from unsplash_places.scraper import extract_location
 
 def test_scrape_sample_1():
-    # Assuming the test runs from the project root
     file_path = Path("data/sample_page_1.htm")
-    location = parse_file(file_path)
-    # Based on grep output: "Hisma Desert – NEOM, Saudi Arabia"
-    assert location == "Hisma Desert – NEOM, Saudi Arabia"
+    content = file_path.read_text(encoding="utf-8")
+    data = extract_location(content)
+    
+    assert data is not None
+    assert data["name"] == "Hisma Desert – NEOM, Saudi Arabia"
+    # Check that image_url starts with expected unsplash domain and contains photo ID
+    assert "https://images.unsplash.com/photo-" in data["image_url"]
+    assert "1682685796186" in data["image_url"]
 
 def test_scrape_sample_2():
-     # We should verify what's in sample 2, but let's assume it works if we find something.
-     # Or we can just check it returns a string if we don't know the exact content yet.
      file_path = Path("data/sample_page_2.htm")
-     location = parse_file(file_path)
-     assert location is not None
-     assert isinstance(location, str)
-     assert len(location) > 0
+     content = file_path.read_text(encoding="utf-8")
+     data = extract_location(content)
+     
+     assert data is not None
+     assert isinstance(data["name"], str)
+     assert len(data["name"]) > 0
+     
+     if data["image_url"]:
+         assert "https://images.unsplash.com/" in data["image_url"]

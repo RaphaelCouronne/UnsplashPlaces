@@ -1,26 +1,39 @@
 from bs4 import BeautifulSoup
 from pathlib import Path
 
-def extract_location(html_content: str) -> str | None:
+def extract_location(html_content: str) -> dict | None:
     soup = BeautifulSoup(html_content, "html.parser")
-    # Look for the map marker icon
-    # Based on grep: <svg class="detailIcon..." ...><desc>A map marker</desc></svg>
-    # The sibling span contains the text.
     
-    # Method: Find svg with desc "A map marker"
+    # 1. Get Location Name
+    # Look for the map marker icon
+    location_name = None
     markers = soup.find_all("desc", string="A map marker")
     for marker in markers:
-        # parent is svg. parent's next sibling is the span with text.
         svg = marker.parent
         if svg:
              location_span = svg.find_next_sibling("span")
              if location_span:
-                 return " ".join(location_span.get_text(strip=True).split())
-    return None
+                 location_name = " ".join(location_span.get_text(strip=True).split())
+                 break
+    
+    if not location_name:
+        return None
+
+    # 2. Get Image URL
+    image_url = None
+    meta_image = soup.find("meta", property="og:image")
+    if meta_image:
+        image_url = meta_image.get("content")
+
+    return {
+        "name": location_name,
+        "image_url": image_url
+    }
 
 def parse_file(file_path: Path) -> str | None:
     with open(file_path, "r", encoding="utf-8") as f:
-        return extract_location(f.read())
+        data = extract_location(f.read())
+        return data["name"] if data else None
 
 
 def fetch_url(url: str) -> str | None:

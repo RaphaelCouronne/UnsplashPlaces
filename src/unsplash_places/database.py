@@ -33,9 +33,17 @@ class Database:
                     location_name TEXT UNIQUE,
                     latitude REAL,
                     longitude REAL,
+                    image_url TEXT,
                     geocoded_at TIMESTAMP
                 )
             ''')
+            
+            # Migration: Ensure image_url column exists
+            try:
+                cursor.execute("ALTER TABLE locations ADD COLUMN image_url TEXT")
+            except sqlite3.OperationalError:
+                # Column likely already exists
+                pass
 
             # Table for failed geocoding attempts to avoid retrying indefinitely
             cursor.execute('''
@@ -64,22 +72,24 @@ class Database:
             ''', (url, html_content, datetime.now()))
             conn.commit()
 
-    def get_location(self, location_name: str) -> tuple[float, float] | None:
+    def get_location(self, location_name: str) -> tuple[float, float, str | None] | None:
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT latitude, longitude FROM locations WHERE location_name = ?', (location_name,))
+            cursor.execute('SELECT latitude, longitude, image_url FROM locations WHERE location_name = ?', (location_name,))
             row = cursor.fetchone()
             if row:
                 return row
         return None
 
-    def save_location(self, location_name: str, latitude: float, longitude: float):
+    def save_location(self, location_name: str, latitude: float, longitude: float, image_url: str | None = None):
         with self.get_connection() as conn:
             cursor = conn.cursor()
+            # We use INSERT OR REPLACE. Since we might be updating an existing record with a new image_url,
+            # this works.
             cursor.execute('''
-                INSERT OR REPLACE INTO locations (location_name, latitude, longitude, geocoded_at)
-                VALUES (?, ?, ?, ?)
-            ''', (location_name, latitude, longitude, datetime.now()))
+                INSERT OR REPLACE INTO locations (location_name, latitude, longitude, image_url, geocoded_at)
+                VALUES (?, ?, ?, ?, ?)
+            ''', (location_name, latitude, longitude, image_url, datetime.now()))
             conn.commit()
 
     def is_failed_location(self, location_name: str) -> bool:

@@ -32,28 +32,37 @@ def main():
         if not html_content:
             continue
             
-        loc_name = extract_location(html_content)
-        if not loc_name:
+        loc_data = extract_location(html_content)
+        if not loc_data:
             continue
             
+        loc_name = loc_data["name"]
+        image_url = loc_data["image_url"]
+
         # Check DB for existing or failed location
         cached_loc = db.get_location(loc_name)
         if cached_loc:
-            # cached_loc is (lat, lon) from our select query in database.py
-            # wait, get_location returns row which is (latitude, longitude)
-            lat, lon = cached_loc
-            # print(f"Found cached location: {loc_name}") # Optional logging
+            # cached_loc is (lat, lon, image_url)
+            lat, lon, cached_img = cached_loc
+            # Update image_url if not present in cache but present now?
+            # For now, just use what we have or prefer the new one if cache is null?
+            # Let's keep simple: use cached.
+            # If cached_img is None and we have image_url, maybe update?
+            if not cached_img and image_url:
+                db.save_location(loc_name, lat, lon, image_url)
+                cached_img = image_url
+
             locations_data.append({
                 "Title": row['Title'],
                 "Url": row['Url'],
                 "Location": loc_name,
                 "Latitude": lat,
-                "Longitude": lon
+                "Longitude": lon,
+                "Image": cached_img
             })
             continue
 
         if db.is_failed_location(loc_name):
-            # print(f"Skipping known failed location: {loc_name}")
             continue
             
         print(f"Geocoding new location: {loc_name}")
@@ -63,13 +72,14 @@ def main():
         if coords:
             lat, lon = coords
             print(f"  -> Coords: {lat}, {lon}")
-            db.save_location(loc_name, lat, lon)
+            db.save_location(loc_name, lat, lon, image_url)
             locations_data.append({
                 "Title": row['Title'],
                 "Url": row['Url'],
                 "Location": loc_name,
                 "Latitude": lat,
-                "Longitude": lon
+                "Longitude": lon,
+                "Image": image_url
             })
         else:
             print(f"  -> Could not geocode: {loc_name}")
