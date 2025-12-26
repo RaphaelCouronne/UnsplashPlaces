@@ -1,13 +1,14 @@
 import polars as pl
 from unsplash_places.config import _ROOT_PATH
-from unsplash_places.fetcher import fetch_url
+import asyncio
+from unsplash_places.fetcher import fetch_all
 from unsplash_places.scraper import extract_location
 from unsplash_places.geocoding import Geocoder
 from unsplash_places.visualization import create_map
 
 from unsplash_places.database import Database
 
-def main(retry_failed_geocoding=False):
+async def main(retry_failed_geocoding=False):
     # 1. Load CSV
     csv_path = _ROOT_PATH / 'data/unsplash_places.csv'
     if not csv_path.exists():
@@ -24,10 +25,16 @@ def main(retry_failed_geocoding=False):
     db = Database()
     locations_data = []
 
+    # 2.5 Batch Fetch URLs Asynchronously
+    print("Fetching URLs...")
+    all_urls = df['Url'].to_list()
+    # fetch_all handles caching internally (checks DB before network)
+    page_contents = await fetch_all(all_urls)
+
     # 3. Iterate, Scrape, Geocode
     for row in df.iter_rows(named=True):
         url = row['Url']
-        html_content = fetch_url(url)
+        html_content = page_contents.get(url)
         
         if not html_content:
             continue
@@ -68,7 +75,7 @@ def main(retry_failed_geocoding=False):
             
         print(f"Geocoding new location: {loc_name}")
         
-        # Geocode
+        # Geocode (Sequential, rate-limited)
         coords = geocoder.geocode(loc_name)
         if coords:
             lat, lon = coords
@@ -96,4 +103,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     retry_failed_geocoding = args.retry_failed_geocoding    
-    main(retry_failed_geocoding=retry_failed_geocoding)
+    asyncio.run(main(retry_failed_geocoding=retry_failed_geocoding))
