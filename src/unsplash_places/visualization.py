@@ -16,10 +16,10 @@ def create_map(locations_data: list[dict], output_path: Path | None = None) -> P
     for item in locations_data:
         folium.Marker(
             [item['Latitude'], item['Longitude']],
-            popup=f"{item['Title']}<br>{item['Location']}",
+            popup=f"<b>{item['Title']}</b><br>{item['Location']}<br><a href='{item['Url']}' target='_blank'>More info</a>",
             tooltip=item['Location']
         ).add_to(m)
-        
+    
     if output_path is None:
         output_path = _ROOT_PATH / 'data/unsplash_map.html'
         
