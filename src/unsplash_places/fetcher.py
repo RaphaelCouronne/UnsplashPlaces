@@ -1,27 +1,23 @@
 import requests
 import time
-import hashlib
-from pathlib import Path
-from unsplash_places.config import _ROOT_PATH
+from unsplash_places.database import Database
 
-CACHE_DIR = _ROOT_PATH / 'data/cache'
-CACHE_DIR.mkdir(parents=True, exist_ok=True)
+# We maintain a single DB instance or check if we should create one here.
+# For simplicity, let's instantiate it here.
+db = Database()
 
 def fetch_url(url: str) -> str | None:
-    """Fetch URL with caching."""
-    url_hash = hashlib.md5(url.encode()).hexdigest()
-    cache_file = CACHE_DIR / f"{url_hash}.html"
-    
-    if cache_file.exists():
-        return cache_file.read_text(encoding="utf-8")
+    """Fetch URL with database caching."""
+    cached_content = db.get_page(url)
+    if cached_content:
+        return cached_content
     
     try:
         print(f"Fetching {url}...")
-        # Use a real user agent to be polite and avoid blocking
         headers = {"User-Agent": "UnsplashPlacesBot/1.0"}
         response = requests.get(url, headers=headers, timeout=10)
         if response.status_code == 200:
-            cache_file.write_text(response.text, encoding="utf-8")
+            db.save_page(url, response.text)
             time.sleep(1) # Polite delay
             return response.text
         else:

@@ -1,0 +1,62 @@
+name: Deploy Map
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Restore/Save Database Cache
+        uses: actions/cache@v4
+        with:
+          path: data/places.db
+          # Cache code based on a rotation or simply try to restore the latest
+          # We use a key that includes the commit hash but restore-keys to fall back to previous
+          key: places-db-${{ github.run_id }}
+          restore-keys: |
+            places-db-
+
+      - name: Restore HTML Cache
+        uses: actions/cache@v4
+        with:
+          path: data/cache
+          key: html-cache-${{ github.run_id }}
+          restore-keys: |
+            html-cache-
+
+      - name: Run Scraper and Map Generation
+        run: uv run src/unsplash_places/main.py
+
+      - name: Prepare Pages
+        run: |
+          mkdir public
+          cp data/unsplash_map.html public/index.html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
