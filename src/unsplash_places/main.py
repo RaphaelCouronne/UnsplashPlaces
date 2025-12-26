@@ -7,7 +7,7 @@ from unsplash_places.visualization import create_map
 
 from unsplash_places.database import Database
 
-def main():
+def main(retry_failed_geocoding=False):
     # 1. Load CSV
     csv_path = _ROOT_PATH / 'data/unsplash_places.csv'
     if not csv_path.exists():
@@ -62,8 +62,9 @@ def main():
             })
             continue
 
-        if db.is_failed_location(loc_name):
-            continue
+        if not retry_failed_geocoding:
+            if db.is_failed_location(loc_name):
+                continue
             
         print(f"Geocoding new location: {loc_name}")
         
@@ -89,4 +90,10 @@ def main():
     create_map(locations_data)
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument( '-r', "--retry-failed-geocoding", action="store_true")
+    args = parser.parse_args()
+
+    retry_failed_geocoding = args.retry_failed_geocoding    
+    main(retry_failed_geocoding=retry_failed_geocoding)
